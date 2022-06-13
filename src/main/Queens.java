@@ -7,46 +7,39 @@ import java.util.concurrent.atomic.AtomicReference;
 
 public class Queens {
     protected final int dimension;
-    protected final byte[][] board;
+    protected final int[] board;
     public volatile static AtomicReference<Instant> endTime = new AtomicReference<>(Instant.now());
     public volatile static AtomicInteger numberOfSolutions = new AtomicInteger(0);
 
     public Queens(int dimension) {
         this.dimension = dimension;
-        this.board = new byte[dimension][dimension];
+        this.board = new int[dimension];
+    }
+
+    protected synchronized void printSolution(int[] board) {
+        for (int value : board) {
+            System.out.printf(value + "%3s", " ");
+        }
+
+        System.out.println("\n");
+
         for (int i = 0; i < dimension; i++) {
-            Arrays.fill(board[i], (byte) 0);
+            for (int value : board) {
+                System.out.println(value == i ? "Q\t" : "*\t");
+            }
+            System.out.print("\n");
         }
     }
 
-//    protected synchronized void printSolution(byte[][] board) {
-//        for (int i = 0; i < dimension; i++) {
-//            for (int j = 0; j < dimension; j++) {
-//                System.out.print(board[i][j] + " ");
-//            }
-//            System.out.println();
-//        }
-//        System.out.println();
-//    }
-
-    protected boolean isConsistent(int row, int col, byte[][] board) {
-        // Check this row on left side
-        for (int j = 0; j < col; j++) {
-            if (board[row][j] == 1) {
+    protected boolean isConsistent(int col, int[] board) {
+        for (int i = 0; i < col; i++) {
+            // same row
+            if (board[i] == board[col]) {
                 return false;
             }
-        }
 
-        // Check upper diagonal on left side
-        for (int i = row, j = col; i >= 0 && j >= 0; i--, j--) {
-            if (board[i][j] == 1) {
-                return false;
-            }
-        }
-
-        // Check lower diagonal on left side
-        for (int i = row, j = col; j >= 0 && i < dimension; i++, j--) {
-            if (board[i][j] == 1) {
+            // diagonal
+            if (col - i == Math.abs(board[col] - board[i])) {
                 return false;
             }
         }
@@ -63,24 +56,18 @@ public class Queens {
         return false;
     }
 
-    protected void solveNQUtil(int col, byte[][] board) {
+    protected void solveNQUtil(int col, int[] board) {
         if (isSolution(col)) {
             return;
         }
 
-        // Consider this column and try placing this queen in all rows one by one
         for (int i = 0; i < dimension; i++) {
-            // Check if the queen can be placed on board[i][col]
-            if (isConsistent(i, col, board)) {
-                // Place this queen in board[i][col]
-                board[i][col] = 1;
-
+            // place the queen from column = col at the row = i
+            board[col] = i;
+            if (isConsistent(col, board)) {
                 // recur to place rest of the queens
-                byte[][] newBoard = copyBoard(board);
+                int[] newBoard = copyBoard(board);
                 solveNQUtil(col + 1, newBoard);
-
-                // remove queen from board[i][col]
-                board[i][col] = 0; // BACKTRACK
             }
         }
     }
@@ -89,12 +76,8 @@ public class Queens {
         solveNQUtil(0, copyBoard(board));
     }
 
-    protected byte[][] copyBoard(byte[][] board) {
-        byte[][] newBoard = new byte[dimension][dimension];
-        for (int i = 0; i < dimension; i++) {
-            newBoard[i] = Arrays.copyOf(board[i], dimension);
-        }
-        return newBoard;
+    protected int[] copyBoard(int[] board) {
+        return Arrays.copyOf(board, dimension);
     }
 
     /**
@@ -103,9 +86,9 @@ public class Queens {
      * @param row the row of the Queen
      * @return a new board with a Queen on the first column
      */
-    protected byte[][] createStartingElement(int row) {
-        byte[][] startingElement = copyBoard(board);
-        startingElement[row][0] = 1;
+    protected int[] createStartingElement(int row) {
+        int[] startingElement = copyBoard(board);
+        startingElement[0] = row;
         return startingElement;
     }
 

@@ -13,7 +13,7 @@ public class QueensParallel2 extends Queens {
         // we create N threads, each starting with a different position for the first Queen
         List<Thread> threads = new ArrayList<>();
         for (int i = 0; i < dimension; i++) {
-            byte[][] startingElement = createStartingElement(i);
+            int[] startingElement = createStartingElement(i);
             Thread thread = new Thread(() -> solveNQUtil(1, startingElement));
             threads.add(thread);
             thread.start();

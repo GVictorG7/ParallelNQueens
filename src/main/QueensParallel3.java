@@ -9,26 +9,21 @@ public class QueensParallel3 extends Queens {
     }
 
     @Override
-    protected void solveNQUtil(int col, byte[][] board) {
+    protected void solveNQUtil(int col, int[] board) {
         if (isSolution(col)) {
             return;
         }
 
         // Consider this column and try placing this queen in all rows one by one
         for (int i = 0; i < dimension; i++) {
-            // Check if the queen can be placed on board[i][col]
-            if (isConsistent(i, col, board)) {
-                // Place this queen in board[i][col]
-                board[i][col] = 1;
+            // place the queen from column = col at the row = i
+            board[col] = i;
 
-                // recur to place rest of the queens
+            if (isConsistent(col, board)) {
                 // copy the board so that the new thread can work with its own data
-                byte[][] newBoard = copyBoard(board);
+                int[] newBoard = copyBoard(board);
                 // create a new thread for the next step of the solution
                 new Thread(() -> solveNQUtil(col + 1, newBoard)).start();
-
-                // remove queen from board[i][col]
-                board[i][col] = 0; // BACKTRACK
             }
         }
     }
@@ -38,7 +33,7 @@ public class QueensParallel3 extends Queens {
         // we create N threads, each starting with a different position of the first Queen
         List<Thread> threads = new ArrayList<>();
         for (int i = 0; i < dimension; i++) {
-            byte[][] startingElement = createStartingElement(i);
+            int[] startingElement = createStartingElement(i);
             Thread thread = new Thread(() -> solveNQUtil(1, startingElement));
             threads.add(thread);
             thread.start();
