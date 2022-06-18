@@ -75,15 +75,14 @@ public class Queens extends RecursiveAction {
             board[col] = i;
             if (isConsistent(col, board)) {
                 // recur to place rest of the queens
-                int[] newBoard = copyBoard(board);
-                solveNQUtil(col + 1, newBoard);
+                solveNQUtil(col + 1, board);
             }
         }
     }
 
     @Override
     public void compute() {
-        solveNQUtil(startingColumn, copyBoard(board));
+        solveNQUtil(startingColumn, board);
     }
 
     protected int[] copyBoard(int[] board) {
