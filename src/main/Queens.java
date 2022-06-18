@@ -2,18 +2,27 @@ package main;
 
 import java.time.Instant;
 import java.util.Arrays;
+import java.util.concurrent.ForkJoinPool;
+import java.util.concurrent.RecursiveAction;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
 
-public class Queens {
+public class Queens extends RecursiveAction {
     protected final int dimension;
     protected final int[] board;
+    protected final int startingColumn;
+    protected ForkJoinPool forkJoinPool = ForkJoinPool.commonPool();
     public volatile static AtomicReference<Instant> endTime = new AtomicReference<>(Instant.now());
     public volatile static AtomicInteger numberOfSolutions = new AtomicInteger(0);
 
     public Queens(int dimension) {
-        this.dimension = dimension;
-        this.board = new int[dimension];
+        this(new int[dimension], 0);
+    }
+
+    public Queens (int[] board, int startingColumn) {
+        this.dimension = board.length;
+        this.board = board;
+        this.startingColumn = startingColumn;
     }
 
     protected synchronized void printSolution(int[] board) {
@@ -72,8 +81,9 @@ public class Queens {
         }
     }
 
-    public void solveNQ() {
-        solveNQUtil(0, copyBoard(board));
+    @Override
+    public void compute() {
+        solveNQUtil(startingColumn, copyBoard(board));
     }
 
     protected int[] copyBoard(int[] board) {

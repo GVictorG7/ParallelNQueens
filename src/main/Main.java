@@ -6,7 +6,7 @@ import java.time.Instant;
 public class Main {
     // matrix: non: 2279185 - 2M52.5739287S P2: 2279184 - 28.9483068S
     // array : non: 2279184 - 1M19.4518605S P2: 2279184 - 9.7818787S
-    private static final int DIMENSION = 16;
+    private static final int DIMENSION = 15;
 
     public static void main(String... args) {
 //        simpleExecution();
@@ -19,7 +19,7 @@ public class Main {
         System.out.println("Non parallel solution:");
         Queens queens = new Queens(DIMENSION);
         Instant start = Instant.now();
-        queens.solveNQ();
+        queens.compute();
         System.out.println(Queens.endTime.get() + " Solutions found: " + Queens.numberOfSolutions.get());
         System.out.println("duration non parallel: " + Duration.between(start, Queens.endTime.get()));
     }
@@ -28,7 +28,7 @@ public class Main {
         System.out.println("Parallel solution 1:");
         Queens queensParallel = new QueensParallel(DIMENSION);
         Instant startParallel = Instant.now();
-        queensParallel.solveNQ();
+        queensParallel.compute();
         System.out.println(Queens.endTime.get() + " Solutions found: " + Queens.numberOfSolutions.get());
         System.out.println("duration parallel: " + Duration.between(startParallel, Queens.endTime.get()));
     }
@@ -37,7 +37,7 @@ public class Main {
         System.out.println("Parallel solution 2:");
         Queens queensParallel2 = new QueensParallel2(DIMENSION);
         Instant start = Instant.now();
-        queensParallel2.solveNQ();
+        queensParallel2.compute();
         System.out.println(Queens.endTime.get() + " Solutions found: " + Queens.numberOfSolutions.get());
         System.out.println("duration parallel2: " + Duration.between(start, Queens.endTime.get()));
     }
@@ -46,7 +46,7 @@ public class Main {
         System.out.println("Parallel solution 3:");
         Queens queensParallel3 = new QueensParallel3(DIMENSION);
         Instant start = Instant.now();
-        queensParallel3.solveNQ();
+        queensParallel3.compute();
         System.out.println(Queens.endTime.get() + " Solutions found: " + Queens.numberOfSolutions.get());
         System.out.println("duration parallel2: " + Duration.between(start, Queens.endTime.get()));
     }

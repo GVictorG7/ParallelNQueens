@@ -8,23 +8,28 @@ public class QueensParallel2 extends Queens {
         super(dimension);
     }
 
+    public QueensParallel2(int[] board, int startingColumn) {
+        super(board, startingColumn);
+    }
+
     @Override
-    public void solveNQ() {
+    public void compute() {
         // we create N threads, each starting with a different position for the first Queen
         List<Thread> threads = new ArrayList<>();
         for (int i = 0; i < dimension; i++) {
             int[] startingElement = createStartingElement(i);
-            Thread thread = new Thread(() -> solveNQUtil(1, startingElement));
-            threads.add(thread);
-            thread.start();
-        }
 
-        for (Thread thread : threads) {
-            try {
-                thread.join();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+            forkJoinPool.invoke(new Queens(startingElement, 1));
+//            Thread thread = new Thread(() -> solveNQUtil(1, startingElement));
+//            threads.add(thread);
+//            thread.start();
         }
+//        for (Thread thread : threads) {
+//            try {
+//                thread.join();
+//            } catch (InterruptedException e) {
+//                e.printStackTrace();
+//            }
+//        }
     }
 }

@@ -29,7 +29,7 @@ public class QueensParallel3 extends Queens {
     }
 
     @Override
-    public void solveNQ() {
+    public void compute() {
         // we create N threads, each starting with a different position of the first Queen
         List<Thread> threads = new ArrayList<>();
         for (int i = 0; i < dimension; i++) {
