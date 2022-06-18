@@ -66,14 +66,13 @@ public class Queens {
             board[col] = i;
             if (isConsistent(col, board)) {
                 // recur to place rest of the queens
-                int[] newBoard = copyBoard(board);
-                solveNQUtil(col + 1, newBoard);
+                solveNQUtil(col + 1, board);
             }
         }
     }
 
     public void solveNQ() {
-        solveNQUtil(0, copyBoard(board));
+        solveNQUtil(0, board);
     }
 
     protected int[] copyBoard(int[] board) {

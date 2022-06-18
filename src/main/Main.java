@@ -4,9 +4,10 @@ import java.time.Duration;
 import java.time.Instant;
 
 public class Main {
-    // non: 2279184 - 1M19.4518605S P2: 2279184 - 9.7818787S
-    // P2: 16: 14772512 - 34.1554748S; 17: 95815104 - 5M2.2752189S
-    private static final int DIMENSION = 16;
+    // 15  (2279184): non:   28.5359368S | P2:  5.2216068S
+    // 16 (14772512): non: 3M37.4622168S | P2: 34.1554748S
+    // 17 (95815104): non: 58M3.3582646S | P2: 5M2.2752189S / 6M55.6064562S
+    private static final int DIMENSION = 17;
 
     public static void main(String... args) {
 //        simpleExecution();
