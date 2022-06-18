@@ -4,8 +4,8 @@ import java.time.Duration;
 import java.time.Instant;
 
 public class Main {
-    // matrix: non: 2279185 - 2M52.5739287S P2: 2279184 - 28.9483068S
-    // array : non: 2279184 - 1M19.4518605S P2: 2279184 - 9.7818787S
+    // non: 2279184 - 1M19.4518605S P2: 2279184 - 9.7818787S
+    // P2: 16: 14772512 - 34.1554748S; 17: 95815104 - 5M2.2752189S
     private static final int DIMENSION = 16;
 
     public static void main(String... args) {
