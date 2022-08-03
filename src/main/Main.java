@@ -4,15 +4,16 @@ import java.time.Duration;
 import java.time.Instant;
 
 public class Main {
-    // 15  (2279184): non:   28.5359368S | P2:  5.2216068S
-    // 16 (14772512): non: 3M37.4622168S | P2: 34.1554748S
-    // 17 (95815104): non: 58M3.3582646S | P2: 5M2.2752189S / 6M55.6064562S
+    // 15  (2279184): non:   28.5359368S | P2:  5.2216068S | FJTP:  4.4776981S/4.1847606S | (>=log+Q) 4.7990828S | (>sqrt) 3.9960049S
+    // 16 (14772512): non: 3M37.4622168S | P2: 34.1554748S | FJTP: 28.0125757S | FJTP1: (>=log+Q) 37.3429689S | (>sqrt) 30.5918201S
+    // 17 (95815104): non: 58M3.3582646S | P2: 5M2.2752189S / 6M55.6064562S | FJTP: 4M21.0865125S |(>=log+Q) 4M31.2797301S | (>=log)3M49.3582799S | (>sqrt) 3M48.7637032S
+    // 18
     private static final int DIMENSION = 17;
 
     public static void main(String... args) {
 //        simpleExecution();
-//        parallelExecution();
-        parallelExecution2();
+        parallelExecution();
+//        parallelExecution2();
 //        parallelExecution3();
     }
 

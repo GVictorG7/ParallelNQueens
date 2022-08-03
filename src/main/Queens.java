@@ -11,7 +11,7 @@ public class Queens extends RecursiveAction {
     protected final int dimension;
     protected final int[] board;
     protected final int startingColumn;
-    protected ForkJoinPool forkJoinPool = ForkJoinPool.commonPool();
+    protected static final ForkJoinPool POOL = ForkJoinPool.commonPool();
     public volatile static AtomicReference<Instant> endTime = new AtomicReference<>(Instant.now());
     public volatile static AtomicInteger numberOfSolutions = new AtomicInteger(0);
 
