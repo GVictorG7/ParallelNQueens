@@ -76,8 +76,7 @@ public class Queens {
                 board[i][col] = 1;
 
                 // recur to place rest of the queens
-                byte[][] newBoard = copyBoard(board);
-                solveNQUtil(col + 1, newBoard);
+                solveNQUtil(col + 1, board);
 
                 // remove queen from board[i][col]
                 board[i][col] = 0; // BACKTRACK
